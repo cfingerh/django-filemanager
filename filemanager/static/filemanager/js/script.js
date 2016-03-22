@@ -20,6 +20,11 @@ function onload() {
             $('#dir-menu').hide();
             $('#file-menu').hide();
     });
+    $('#left').on('contextmenu', 'div.directory', function(ev) {
+console.log(this, ev, $(this).data('id'));
+        rightclick_handle(ev, $(this).data('id'), 'dir');
+    });
+    // $('#right').on('contextmenu
     if(messages.length > 0) {
         $('#message').html(messages[0]);
             setTimeout(function () {
@@ -113,7 +118,7 @@ function show_files(id) {
     $('#content').html('');
     for(var d in dirs) {
         $('#content').append(
-            '<div class="file" title="' + dirs[d].name + '" onmousedown="rightclick_handle(event, \'' + dirs[d].id + '\',\'dir\');" ondblclick="show_files(' + dirs[d].id + ')">' +
+            '<div class="file" title="' + dirs[d].name + '" data-mode="dir" data-id="' + dirs[d].id + '">' +
                 '<div class="thumbnail">' +
                     '<div style="background-image: url(' + static_url + 'filemanager/images/folder_big.png); background-size: contain;" width="100%" height="100%"></div>' +
                 '</div>' +
@@ -124,8 +129,7 @@ function show_files(id) {
     for(var f in files) {
         var ext = files[f].split('.')[files[f].split('.').length - 1];
         $('#content').append(
-            '<div class="file" title="' + files[f] + '"' +
-                'onmousedown="rightclick_handle(event,\'' + files[f] + '\',\'file\');">' +
+            '<div class="file" title="' + files[f] + '" data-mode="file">' +
                 '<div class="thumbnail">' +
                     '<div style="background-image: url(' + get_path(id).substr(1) + files[f] + '); background-size: contain;" width="100%" height="100%"></div></div>' +
                 '<div class="filename">' + files[f] + '</div>' +
@@ -152,7 +156,7 @@ function show_directories(ds) {
         }
         if(empty)
             sign = '';
-        html += '<div class="directory ' + (id==dir_id ? 'current_directory' : '') + '" id="' + id + '">' +
+        html += '<div class="directory ' + (id==dir_id ? 'current_directory' : '') + '" data-id="' + id + '">' +
             '<div class="directory-sign" onclick="change_sign(' + id + ')">' + sign + '</div>' +
                 '<div class="directory-image-name" onclick="show_files(' + id + ')" onmousedown="rightclick_handle(event, ' + id + ',\'dir\');">' +
                    '<img class="directory-image" src="' + static_url + 'filemanager/images/' + image + '"/>' +
