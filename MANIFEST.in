@@ -1,0 +1,5 @@
+include LICENSE
+include README.md
+recursive-include filemanager/templates *
+recursive-include filemanager/static *
+recursive-exclude * *.pyc
