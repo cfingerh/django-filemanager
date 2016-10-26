@@ -292,6 +292,7 @@ class FileManager(object):
         space_consumed = self.get_size(self.basepath)
     else:
         space_consumed = 0
+    from b2b.settings import STATIC_URL
     return render(request, 'filemanager/index.html', {
         'dir_structure': self.directory_structure(),
         'messages':map(str,messages),
@@ -302,4 +303,5 @@ class FileManager(object):
         'space_consumed':space_consumed,
         'max_space':self.maxspace,
         'show_space':settings.FILEMANAGER_SHOW_SPACE,
+        'STATIC_URL':STATIC_URL
     })
